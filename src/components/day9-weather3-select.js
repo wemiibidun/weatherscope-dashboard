@@ -15,12 +15,10 @@ export default function Select(props) {
         setSelectedValue(() => userInput);
         event.preventDefault(); // Prevent default form submission behavior 
     }
-
-    // const countries = [
-    //     { country: "ca", name: 'Canada' },
-    //     { country: 'us', name: 'USA' },
-    //     { country: "eg", name: 'Egypt' }];
+   
     const cities = props.data;
+    const citiesArray = Object.values(cities);
+    
     return (
         <div className="container p-3 bg-warning">
             <i className='text-danger fw-bold'>Select component</i>
@@ -29,7 +27,7 @@ export default function Select(props) {
                     Choose your country:</label>
                 <select value={userInput} onChange={handleChange}
                     className='form-select col-md'>
-                    {cities.map((city, index) =>
+                    {citiesArray.map((city, index) =>
                         <option key={city.country + index} value={`${city.name} , ${city.country}`}>
                             {city.name}, {city.country}</option>
                     )}
