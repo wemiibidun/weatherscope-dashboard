@@ -1,16 +1,25 @@
-export default function WeatherItem({ data }) {
-    const dt = data && (new Date(data.dt * 1000)).toLocaleTimeString();
-    //console.log((data.dt - 21600) % (86400), dt)
-    return (
-        <div className="container p-3 bg-success">
-            <i className='text-danger fw-bold'>Weather Item component</i>
-            {data &&
-                <li data-testid='11'>
-                    {dt} -
-                    Temperature {data.main.temp}C, Feels Like {data.main.feels_like}C -
-                    Wind Speed {data.wind.speed}
-                </li>
-            }
-        </div>
-    );
+import { type } from "@testing-library/user-event/dist/type";
+
+export default function WeatherItem(props) {
+  const data = props.data;
+
+  if (!data) {
+    return null;
+  }
+//   console.log(data);
+
+  return (
+    <div className="container p-3 bg-success">
+      <i className="text-danger fw-bold">Weather Item component</i>
+      {data &&
+        data.list &&
+        data.list.map((entry, index) => (
+          <li data-testid="11" key={index}>
+            {new Date(entry.dt * 1000).toLocaleDateString()} - Temperature{" "}
+            {entry.main.temp}C, Feels Like {entry.main.feels_like}C - Wind Speed{" "}
+            {entry.wind.speed}
+          </li>
+        ))}
+    </div>
+  );
 }

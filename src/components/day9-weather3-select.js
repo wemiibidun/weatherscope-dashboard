@@ -1,8 +1,13 @@
 import React from 'react';
+import Body from './day9-weather4-body';
+
 
 export default function Select(props) {
+    // const selectedValue = props.select;
     const [userInput, setUserInput] = React.useState('');
     const [selectedValue, setSelectedValue] = React.useState(null);
+    // const [selectedCity, setSelectedCity] = React.useState(null);
+    
 
     const handleChange = (event) => {
         // Get the input from the user and save it in a state variable
@@ -18,7 +23,7 @@ export default function Select(props) {
    
     const cities = props.data;
     const citiesArray = Object.values(cities);
-    
+    console.log(selectedValue);
     return (
         <div className="container p-3 bg-warning">
             <i className='text-danger fw-bold'>Select component</i>
@@ -41,6 +46,7 @@ export default function Select(props) {
                 selectedValue &&
                 <div> You selected {selectedValue} </div>
             }
+            <Body data={selectedValue} />
         </div>
     );
 }
