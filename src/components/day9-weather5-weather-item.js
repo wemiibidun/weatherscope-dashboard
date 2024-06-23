@@ -1,4 +1,4 @@
-import { type } from "@testing-library/user-event/dist/type";
+// import { type } from "@testing-library/user-event/dist/type";
 
 export default function WeatherItem(props) {
   const data = props.data;

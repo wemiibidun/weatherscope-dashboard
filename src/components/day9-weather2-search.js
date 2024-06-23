@@ -6,7 +6,7 @@ import Select from './day9-weather3-select';
 export default function Search(props) {
     const [searchTerm, setSearchTerm] = React.useState('');
     const [searchResults, setSearchResults] = React.useState([]);
-    const [cel, setCel] = React.useState(null);
+    // const [cel, setCel] = React.useState(null);
 
     const handleChange = (event) => {
         // Get the input from the user and save it in a state variable
