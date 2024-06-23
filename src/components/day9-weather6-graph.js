@@ -31,6 +31,7 @@ export default function Graph(props) {
         // The required day index to display in the graph 
         const startIndex = props.dayIndex * 8
         const endIndex = (props.dayIndex + 1) * 8 - 1;
+        if (data.list && data.list.length > 0) {
         data.list.forEach((sample, index) => {
             if (index < startIndex || index > endIndex) return;
             const d = new Date(sample.dt * 1000);
@@ -39,6 +40,7 @@ export default function Graph(props) {
             temp_max.push(sample.main.temp_max);
             temp_time.push(d.toLocaleTimeString());
         });
+        }
         //console.log('Graph mounted')
         return {
             labels: temp_time,
