@@ -1,50 +1,58 @@
-import React from 'react';
-import Body from './day9-weather4-body';
-
+import React from "react";
+import Body from "./day9-weather4-body";
 
 export default function Select(props) {
-    const [userInput, setUserInput] = React.useState('');
-    const [selectedValue, setSelectedValue] = React.useState(null);
-    
+  const [userInput, setUserInput] = React.useState("");
+  const [selectedValue, setSelectedValue] = React.useState(null);
 
-    const handleChange = (event) => {
-        // Get the input from the user and save it in a state variable
-        // event.target is the input element
-        setUserInput(event.target.value);
-    }
+  const handleChange = (event) => {
+    // Get the input from the user and save it in a state variable
+    // event.target is the input element
+    setUserInput(event.target.value);
+  };
 
-    const handleSubmit = (event) => {
-        console.log('The form submitted with input: ' + userInput);
-        setSelectedValue(() => userInput);
-        event.preventDefault(); // Prevent default form submission behavior 
-    }
-   
-    const cities = props.data;
-    const citiesArray = Object.values(cities);
-    console.log(selectedValue);
-    return (
-        <div className="container p-3 bg-warning">
-            <i className='text-danger fw-bold'>Select component</i>
-            <form onSubmit={handleSubmit} className=' row g-3'>
-                <label className="col-sm col-form-label">
-                    Choose your country:</label>
-                <select value={userInput} onChange={handleChange}
-                    className='form-select col-md'>
-                    {citiesArray.map((city, index) =>
-                        <option key={city.country + index} value={`${city.name} , ${city.country}`}>
-                            {city.name}, {city.country}</option>
-                    )}
-                </select>
-                <div className="col-sm col-form-label">
-                    <input type="submit" value="Submit" className="btn btn-primary mb-3" />
-                </div>
-            </form>
+  const handleSubmit = (event) => {
+    console.log("The form submitted with input: " + userInput);
+    setSelectedValue(() => userInput);
+    // Prevent default form submission behavior
+    event.preventDefault();
+  };
+  const cities = props.data;
+  const citiesArray = Object.values(cities);
+  // console.log(selectedValue);
 
-            {
-                selectedValue &&
-                <div> You selected {selectedValue} </div>
-            }
-            <Body data={selectedValue} />
-        </div>
-    );
+  return (
+    <div className="container p-3 bg-primary">
+      <div class="row">
+        {/* <i className='text-danger fw-bold'>Select component</i> */}
+        <form onSubmit={handleSubmit} className=" row g-3 pb-3">
+          <label className="col-sm col-form-label">Choose your country:</label>
+          <select
+            value={userInput}
+            onChange={handleChange}
+            className="form-select col-md"
+          >
+            {citiesArray.map((city, index) => (
+              <option
+                key={city.country + index}
+                value={`${city.name} , ${city.country}`}
+              >
+                {city.name}, {city.country}
+              </option>
+            ))}
+          </select>
+          <div className="col-sm col-form-label">
+            <input
+              type="submit"
+              value="Submit"
+              className="btn btn-success mb-3"
+            />
+          </div>
+        </form>
+
+        {selectedValue && <div> You selected {selectedValue} </div>}
+        <Body data={selectedValue} />
+      </div>
+    </div>
+  );
 }

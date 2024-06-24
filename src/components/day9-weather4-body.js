@@ -14,7 +14,6 @@ export default function Body(props) {
   const [weatherObj, setWeatherObj] = React.useState(null);
   const selectedCity = props.data;
 
-
   React.useEffect(() => {
     // console.log(selectedCity);
     // API docs https://openweathermap.org/forecast5
@@ -29,14 +28,14 @@ export default function Body(props) {
       });
   }, [selectedCity]);
 
-const handleSettingsChange = (settingsUpdate) => {
+  const handleSettingsChange = (settingsUpdate) => {
     setSettings({ ...settings, ...settingsUpdate });
     console.log(settings);
   };
 
   return (
     <div className="container p-3 bg-info">
-      <i className="text-danger fw-bold">Body component</i>
+      {/* <i className="text-danger fw-bold">Body component</i> */}
       {/* {console.log("this is weather object")} */}
       {/* {console.log(weatherObj.list)} */}
       {weatherObj && weatherObj.city && (
@@ -44,19 +43,28 @@ const handleSettingsChange = (settingsUpdate) => {
           {weatherObj.city.name} - {weatherObj.city.country}
         </h4>
       )}
+
       <div className="row">
         <div className="col">
           <WeatherItem data={weatherObj} />
         </div>
-        <div className="col">
-          <Settings
-            settings={settings}
-            settingsChangeHandler={handleSettingsChange}
-          />
-        </div>
       </div>
-      <div className="row">
-        {weatherObj && <Graph data={weatherObj} dayIndex={1} settings={settings} />}
+
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-6 col-md-6 col-sm-12 mb-3">
+            <Settings
+              settings={settings}
+              settingsChangeHandler={handleSettingsChange}
+            />
+          </div>
+
+          <div className="col-lg-6 col-md-6 col-sm-12 mb-3">
+            {weatherObj && (
+              <Graph data={weatherObj} dayIndex={1} settings={settings} />
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

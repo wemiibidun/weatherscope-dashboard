@@ -4,18 +4,18 @@ export default function WeatherItem(props) {
   if (!data || !data.list) {
     return null;
   }
-//   console.log(data);
+  // console.log(data);
 
   return (
     <div className="container">
       <div className="column">
         {data.list.slice(0, 5).map((entry, index) => (
-          <div key={index} className="card">
+          <div key={index} className="card bg-secondary shadow-md m-2">
             <div className="card-body">
-              <h5 className="card-title">
+              <h5 className="card-title text-white">
                 {new Date(entry.dt * 1000).toLocaleDateString()}
               </h5>
-              <p className="card-text">
+              <p className="card-text text-white">
                 Temperature: {entry.main.temp}°C
                 <br />
                 Feels Like: {entry.main.feels_like}°C
