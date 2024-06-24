@@ -33,15 +33,6 @@ export default function Search(props) {
           });
       }, [searchTerm]);
 
-    // const handleSubmit = (event) => {
-    //     console.log("we are here");
-    //     console.log(searchTerm);
-    //     // console.log('The form submitted with input: ' + searchTerm);
-    //     // setCel(() => (searchTerm - 32) / 1.8);
-        
-    //     event.preventDefault(); // Prevent default form submission behavior 
-    // }
-
     return (
         <div className="container p-3 bg-success">
             <i className='text-danger fw-bold'>Search component</i>
@@ -50,7 +41,7 @@ export default function Search(props) {
                     Please enter city name:
                 </label>
                 <div className="col-sm-4">
-                    <input type="text" value={searchTerm}
+                    <input data-testid="city-input" type="text" value={searchTerm}
                         onChange={handleChange} className="form-control" />
                 </div>
                 <div className="col-sm-4">

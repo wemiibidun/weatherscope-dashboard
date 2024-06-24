@@ -29,11 +29,8 @@ export default function Body(props) {
       });
   }, [selectedCity]);
 
-  const handleSettingsChange = (settingsUpdate) => {
-    console.log(settingsUpdate)
-    setSettings(() => {
-      return { ...settings, ...settingsUpdate };
-    });
+const handleSettingsChange = (settingsUpdate) => {
+    setSettings({ ...settings, ...settingsUpdate });
     console.log(settings);
   };
 
@@ -59,7 +56,7 @@ export default function Body(props) {
         </div>
       </div>
       <div className="row">
-        {weatherObj && <Graph data={weatherObj} dayIndex={1} />}
+        {weatherObj && <Graph data={weatherObj} dayIndex={1} settings={settings} />}
       </div>
     </div>
   );

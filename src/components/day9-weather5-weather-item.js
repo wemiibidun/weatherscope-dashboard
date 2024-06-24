@@ -1,25 +1,31 @@
-// import { type } from "@testing-library/user-event/dist/type";
-
 export default function WeatherItem(props) {
   const data = props.data;
 
-  if (!data) {
+  if (!data || !data.list) {
     return null;
   }
 //   console.log(data);
 
   return (
-    <div className="container p-3 bg-success">
-      <i className="text-danger fw-bold">Weather Item component</i>
-      {data &&
-        data.list &&
-        data.list.map((entry, index) => (
-          <li data-testid="11" key={index}>
-            {new Date(entry.dt * 1000).toLocaleDateString()} - Temperature{" "}
-            {entry.main.temp}C, Feels Like {entry.main.feels_like}C - Wind Speed{" "}
-            {entry.wind.speed}
-          </li>
+    <div className="container">
+      <div className="column">
+        {data.list.slice(0, 5).map((entry, index) => (
+          <div key={index} className="card">
+            <div className="card-body">
+              <h5 className="card-title">
+                {new Date(entry.dt * 1000).toLocaleDateString()}
+              </h5>
+              <p className="card-text">
+                Temperature: {entry.main.temp}°C
+                <br />
+                Feels Like: {entry.main.feels_like}°C
+                <br />
+                Wind Speed: {entry.wind.speed}
+              </p>
+            </div>
+          </div>
         ))}
+      </div>
     </div>
   );
 }

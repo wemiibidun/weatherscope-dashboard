@@ -1,5 +1,5 @@
 import Search from './day9-weather2-search';
-import Body from './day9-weather4-body';
+
 
 export default function Main() {
     return (
@@ -8,7 +8,6 @@ export default function Main() {
             <h2 className='m-3'>My React Weather Application</h2>
             <Search />
             <hr />
-            <Body />
         </div>
     );
 }

@@ -3,10 +3,8 @@ import Body from './day9-weather4-body';
 
 
 export default function Select(props) {
-    // const selectedValue = props.select;
     const [userInput, setUserInput] = React.useState('');
     const [selectedValue, setSelectedValue] = React.useState(null);
-    // const [selectedCity, setSelectedCity] = React.useState(null);
     
 
     const handleChange = (event) => {
