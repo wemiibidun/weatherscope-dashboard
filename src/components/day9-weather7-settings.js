@@ -12,10 +12,12 @@ export default function Settings(props) {
   const celsius = props.settings["tempCelsius"];
   // console.log(celsius)
   return (
-    <div className="card my-3 p-3 bg-info-subtle">
-      <i className="text-danger fw-bold">Settings component</i>
-      <div className="card-body">
-        <h4>Settings</h4>
+    <div className="card my-3 p-3 bg-info-subtle shadow">
+      <i className="text-danger fw-bold">Settings</i>
+
+      <div className="card-body d-flex flex-wrap flex-direction-column justify-content-start">
+        <h4 className="p-2">Temperature:</h4>
+
         <div className="form-check form-check-inline">
           <input
             data-testid="tempUnit1"
@@ -45,26 +47,34 @@ export default function Settings(props) {
           </label>
         </div>
 
-        <CheckBox
-          name="displayTemp"
-          checked={props.settings["displayTemp"]}
-          text="Temperature"
-          handleChange={handleChange}
-        />
-
-        <CheckBox
-          name="displayHumidity"
-          checked={props.settings["displayHumidity"]}
-          text="Humidity"
-          handleChange={handleChange}
-        />
-
-        <CheckBox
-          name="displayWind"
-          checked={props.settings["displayWind"]}
-          text="Wind Speed"
-          handleChange={handleChange}
-        />
+        <div className="w-100 shadow p-3 mb-5 bg-body rounded">
+          <div style={{ textAlign: "center", marginBottom: "20px" }}>
+            <i className="text-danger fw-bold">CheckBox</i>
+          </div>
+          <div className="d-flex flex-direction-column flex-wrap w-100">
+            <CheckBox
+              name="displayTemp"
+              checked={props.settings["displayTemp"]}
+              text="Temperature"
+              handleChange={handleChange}
+              className="px-3 p-2 flex-basis-30"
+            />
+            <CheckBox
+              name="displayHumidity"
+              checked={props.settings["displayHumidity"]}
+              text="Humidity"
+              handleChange={handleChange}
+              className="px-3 p-2 flex-basis-30"
+            />
+            <CheckBox
+              name="displayWind"
+              checked={props.settings["displayWind"]}
+              text="Wind Speed"
+              handleChange={handleChange}
+              className="px-3 p-2 flex-basis-30"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -72,9 +82,8 @@ export default function Settings(props) {
 
 function CheckBox(props) {
   return (
-    <div className="my-3 bg-warning-subtle">
-      <i className="text-danger fw-bold">CheckBox component</i>
-      <div className="form-check ">
+    <div className="my-3 bg-warning-subtle shadow m-4">
+      <div className="form-check">
         <input
           className="form-check-input"
           type="checkbox"

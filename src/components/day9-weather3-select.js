@@ -12,7 +12,7 @@ export default function Select(props) {
   };
 
   const handleSubmit = (event) => {
-    console.log("The form submitted with input: " + userInput);
+    // console.log("The form submitted with input: " + userInput);
     setSelectedValue(() => userInput);
     // Prevent default form submission behavior
     event.preventDefault();
@@ -22,11 +22,11 @@ export default function Select(props) {
   // console.log(selectedValue);
 
   return (
-    <div className="container p-3 bg-primary">
+    <div className="container p-3 bg-primary-subtle">
       <div class="row">
         {/* <i className='text-danger fw-bold'>Select component</i> */}
         <form onSubmit={handleSubmit} className=" row g-3 pb-3">
-          <label className="col-sm col-form-label">Choose your country:</label>
+          <label className="col-sm col-form-label text-dark">Choose your country:</label>
           <select
             value={userInput}
             onChange={handleChange}
@@ -45,12 +45,12 @@ export default function Select(props) {
             <input
               type="submit"
               value="Submit"
-              className="btn btn-success mb-3"
+              className="btn btn-primary mb-3"
             />
           </div>
         </form>
 
-        {selectedValue && <div> You selected {selectedValue} </div>}
+        {selectedValue && <div className="text-dark"> You selected {selectedValue} </div>}
         <Body data={selectedValue} />
       </div>
     </div>

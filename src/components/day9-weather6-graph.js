@@ -92,11 +92,19 @@ export default function Graph(props) {
         beginAtZero: true,
       },
     },
+    maintainAspectRatio: false,
   };
+
+
   return (
     <div>
-      <h4>Hourly Temperature data</h4>
-      {props.data && <Line data={getData()} options={options} />}
+      <h4 className="text-dark">Hourly Temperature Data</h4>
+
+      <div style={{height:"60vh",position:"relative", marginBottom:"1%", padding:"1%"}}>
+
+      {props.data && <Line data={getData()} 
+      options={options} />}
+      </div>
     </div>
   );
 }

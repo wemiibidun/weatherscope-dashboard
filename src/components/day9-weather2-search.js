@@ -38,11 +38,11 @@ export default function Search(props) {
   }, [searchTerm]);
 
   return (
-    <div className="container p-3 bg-success">
+    <div className="container p-3 bg-dark-subtle bg-body-tertiary rounded">
       <div class="row">
         {/* <i className='text-danger fw-bold'>Search component</i> */}
         <form onSubmit={handleSubmit} className="my-3 row g-3">
-          <label className="col-sm-4 col-form-label">
+          <label className="col-sm-4 col-form-label text-dark">
             Please enter city name:
           </label>
           <div className="col-sm-4">

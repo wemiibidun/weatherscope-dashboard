@@ -34,14 +34,14 @@ export default function Body(props) {
   };
 
   return (
-    <div className="container p-3 bg-info">
+    <div className="container p-3 bg-info shadow-lg ">
       {/* <i className="text-danger fw-bold">Body component</i> */}
       {/* {console.log("this is weather object")} */}
       {/* {console.log(weatherObj.list)} */}
       {weatherObj && weatherObj.city && (
-        <h4>
-          {weatherObj.city.name} - {weatherObj.city.country}
-        </h4>
+        <h4 className="text-dark shadow-sm p-3 mb-2 bg-body-tertiary rounded bg-info-subtle">
+        This is <span className="text-primary">{weatherObj.city.name}</span> - <span className="text-primary">{weatherObj.city.country}</span> Weather data information
+      </h4>
       )}
 
       <div className="row">
@@ -52,14 +52,14 @@ export default function Body(props) {
 
       <div className="container">
         <div className="row">
-          <div className="col-lg-6 col-md-6 col-sm-12 mb-3">
+          <div className="col-lg-6 col-md-6 col-sm-12 mb-3 mt-5">
             <Settings
               settings={settings}
               settingsChangeHandler={handleSettingsChange}
             />
           </div>
 
-          <div className="col-lg-6 col-md-6 col-sm-12 mb-3">
+          <div className="col-lg-6 col-md-6 col-sm-12 mb-3 mt-3">
             {weatherObj && (
               <Graph data={weatherObj} dayIndex={1} settings={settings} />
             )}

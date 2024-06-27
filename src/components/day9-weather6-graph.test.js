@@ -21,6 +21,6 @@ describe("Graph Component", () => {
     render(<Graph data={mockData} dayIndex={0} settings={mockSettings} />);
 
     // Check if the component renders the title
-    expect(screen.getByText("Hourly Temperature data")).toBeInTheDocument();
+    expect(screen.getByText("Hourly Temperature Data")).toBeInTheDocument();
   });
 });
