@@ -26,46 +26,39 @@ export default function Graph(props) {
   const getData = () => {
     // See API documentation here: https://openweathermap.org/forecast5
     const data = props.data;
-    const temp_min_f = [];
-    const temp_max_f = [];
-    const temp_min_c = [];
-    const temp_max_c = [];
+   
     const humidity = [];
     const wind_speed = [];
     const temp_time = [];
+    const temp_c = [];
+    const temp_f = [];
 
     // The required day index to display in the graph
     const startIndex = props.dayIndex * 8;
     const endIndex = (props.dayIndex + 1) * 8 - 1;
-
-    if (data.list && data.list.length > 0) {
-      data.list.forEach((sample, index) => {
+  
+    if (data && data.list) {
+    data.list.forEach((sample, index) => {
         if (index < startIndex || index > endIndex) return;
         const d = new Date(sample.dt * 1000);
-        temp_min_f.push((sample.main.temp_min * 9) / 5 + 32);
-        temp_max_f.push((sample.main.temp_max * 9) / 5 + 32);
-        temp_min_c.push(sample.main.temp_min);
-        temp_max_c.push(sample.main.temp_max);
+        temp_c.push(sample.main.temp);
+        temp_f.push((sample.main.temp * 9) / 5 + 32);
         humidity.push(sample.main.humidity);
         wind_speed.push(sample.wind.speed);
         temp_time.push(d.toLocaleTimeString());
       });
     }
     //console.log('Graph mounted')
+    // console.log('temp_max_f:', temp_max_f);
+    // console.log('temp_max_c:', temp_max_c);
     return {
       labels: temp_time,
       datasets: [
         {
-          data: props.settings.tempCelsius ? temp_min_c : temp_min_f,
-          borderColor: "blue",
-          fill: false,
-          label: props.settings.tempCelsius ? "Temp Min (C)" : "Temp Min (F)",
-        },
-        {
-          data: props.settings.tempCelsius ? temp_max_c : temp_max_f,
-          borderColor: "red",
-          fill: false,
-          label: props.settings.tempCelsius ? "Temp Max (C)" : "Temp Max (F)",
+            data: props.settings.tempCelsius ? temp_c : temp_f,
+            borderColor: "blue",
+            fill: false,
+            label: props.settings.tempCelsius ? "Temperature (C)" : "Temperature (F)",
         },
         {
           data: props.settings.displayHumidity ? humidity : [],

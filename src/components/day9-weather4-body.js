@@ -17,20 +17,23 @@ export default function Body(props) {
   React.useEffect(() => {
     // console.log(selectedCity);
     // API docs https://openweathermap.org/forecast5
-    const Weather_API_key = "6b9ee5f9edbf0469243e280ab4f5d256";
+    const Weather_API_key = "7beedcd716bb91a99f2dfbd7d36d07d9";
     const url = "https://api.openweathermap.org/data/2.5/forecast";
     // Read about Fetch API here: https://javascript.info/fetch
+ 
     fetch(`${url}?q=${selectedCity}&appid=${Weather_API_key}&units=metric`)
+    
       .then((response) => response.json())
       .then((data) => {
         setWeatherObj(data);
         console.log("API data came mounted");
+        console.log(data);
       });
   }, [selectedCity]);
 
   const handleSettingsChange = (settingsUpdate) => {
     setSettings({ ...settings, ...settingsUpdate });
-    console.log(settings);
+    // console.log(settings);
   };
 
   return (
@@ -46,7 +49,7 @@ export default function Body(props) {
 
       <div className="row">
         <div className="col">
-          <WeatherItem data={weatherObj} />
+        <WeatherItem data={weatherObj} settings={settings} />
         </div>
       </div>
 
