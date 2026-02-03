@@ -19,7 +19,7 @@
 WeatherScope Dashboard is a React weather dashboard that lets users search for a city, pick a location, and view a multi-day forecast with hourly trends. It fetches location matches and forecast data from the OpenWeather API and presents it with interactive display controls.
 
 ## Screenshot
-![WeatherScope preview](public/preview.png)
+![WeatherScope preview](https://github.com/wemiibidun/weatherscope-dashboard/blob/main/preview.png)
 
 ## Technologies
 ![React](https://img.shields.io/badge/React-239120?style=for-the-badge&logo=react&logoColor=white)
