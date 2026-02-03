@@ -3,75 +3,70 @@ export default function Settings(props) {
     props.settingsChangeHandler({ tempCelsius: value });
   };
   const handleChange = (event) => {
-    // console.log(event.target.value)
     const name = event.target.name;
     const value = event.target.checked;
     props.settingsChangeHandler({ [name]: value });
   };
 
   const celsius = props.settings["tempCelsius"];
-  // console.log(celsius)
+
   return (
-    <div className="card my-3 p-3 bg-info-subtle shadow">
-      <i className="text-danger fw-bold">Settings</i>
+    <div className="card panel-card settings-card panel-card h-100 p-3 bg-dark bg-opacity-25 shadow-sm text-light">
+      <div className="card-body">
+        <h4 className="mb-3">Settings</h4>
 
-      <div className="card-body d-flex flex-wrap flex-direction-column justify-content-start">
-        <h4 className="p-2">Temperature:</h4>
-
-        <div className="form-check form-check-inline">
-          <input
-            data-testid="tempUnit1"
-            className="form-check-input"
-            type="radio"
-            name="tempCelsius"
-            id="tempUnit1"
-            checked={celsius}
-            onChange={() => handleTempUnitChange(true)}
-          />
-          <label className="form-check-label" htmlFor="tempUnit1">
-            Celsius
-          </label>
-        </div>
-        <div className="form-check form-check-inline">
-          <input
-            data-testid="tempUnit2"
-            className="form-check-input"
-            type="radio"
-            name="tempCelsius"
-            id="tempUnit2"
-            checked={!celsius}
-            onChange={() => handleTempUnitChange(false)}
-          />
-          <label className="form-check-label" htmlFor="tempUnit2">
-            Fahrenheit
-          </label>
-        </div>
-
-        <div className="w-100 shadow p-3 mb-5 bg-body rounded">
-          <div style={{ textAlign: "center", marginBottom: "20px" }}>
-            <i className="text-danger fw-bold">CheckBox</i>
+        <div className="mb-4">
+          <p className="text-info fw-semibold mb-2">Temperature Unit</p>
+          <div className="form-check form-check-inline">
+            <input
+              data-testid="tempUnit1"
+              className="form-check-input"
+              type="radio"
+              name="tempCelsius"
+              id="tempUnit1"
+              checked={celsius}
+              onChange={() => handleTempUnitChange(true)}
+            />
+            <label className="form-check-label" htmlFor="tempUnit1">
+              Celsius
+            </label>
           </div>
-          <div className="d-flex flex-direction-column flex-wrap w-100">
+          <div className="form-check form-check-inline">
+            <input
+              data-testid="tempUnit2"
+              className="form-check-input"
+              type="radio"
+              name="tempCelsius"
+              id="tempUnit2"
+              checked={!celsius}
+              onChange={() => handleTempUnitChange(false)}
+            />
+            <label className="form-check-label" htmlFor="tempUnit2">
+              Fahrenheit
+            </label>
+          </div>
+        </div>
+
+        <div className="bg-dark bg-opacity-50 rounded-4 p-3">
+          <p className="text-info fw-semibold mb-3">Display Options</p>
+          <div className="display-options-vertical">
             <CheckBox
               name="displayTemp"
               checked={props.settings["displayTemp"]}
               text="Temperature"
               handleChange={handleChange}
-              className="px-3 p-2 flex-basis-30"
             />
             <CheckBox
               name="displayHumidity"
               checked={props.settings["displayHumidity"]}
               text="Humidity"
               handleChange={handleChange}
-              className="px-3 p-2 flex-basis-30"
             />
             <CheckBox
               name="displayWind"
               checked={props.settings["displayWind"]}
-              text="Wind Speed"
+              text="Wind"
               handleChange={handleChange}
-              className="px-3 p-2 flex-basis-30"
             />
           </div>
         </div>
@@ -82,20 +77,18 @@ export default function Settings(props) {
 
 function CheckBox(props) {
   return (
-    <div className="my-3 bg-warning-subtle shadow m-4">
-      <div className="form-check">
-        <input
-          className="form-check-input"
-          type="checkbox"
-          id={props.name}
-          checked={props.checked}
-          onChange={props.handleChange}
-          name={props.name}
-        />
-        <label className="form-check-label" htmlFor={props.name}>
-          {props.text}
-        </label>
-      </div>
+    <div className="form-check form-switch">
+      <input
+        className="form-check-input"
+        type="checkbox"
+        id={props.name}
+        checked={props.checked}
+        onChange={props.handleChange}
+        name={props.name}
+      />
+      <label className="form-check-label" htmlFor={props.name}>
+        {props.text}
+      </label>
     </div>
   );
 }

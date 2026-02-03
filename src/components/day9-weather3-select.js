@@ -5,52 +5,73 @@ export default function Select(props) {
   const [userInput, setUserInput] = React.useState("");
   const [selectedValue, setSelectedValue] = React.useState(null);
 
+  const cities = props.data;
+  const citiesArray = Object.values(cities);
+  const defaultValue =
+    citiesArray.length > 0
+      ? `${citiesArray[0].name},${citiesArray[0].country}`
+      : "";
+
+  React.useEffect(() => {
+    if (defaultValue) {
+      setUserInput(defaultValue);
+    } else {
+      setUserInput("");
+    }
+    setSelectedValue(null);
+  }, [defaultValue]);
+
   const handleChange = (event) => {
-    // Get the input from the user and save it in a state variable
-    // event.target is the input element
     setUserInput(event.target.value);
   };
 
   const handleSubmit = (event) => {
-    // console.log("The form submitted with input: " + userInput);
-    setSelectedValue(() => userInput);
-    // Prevent default form submission behavior
     event.preventDefault();
+    const value = userInput || defaultValue;
+    if (!value) return;
+    setSelectedValue({ city: value, token: Date.now() });
   };
-  const cities = props.data;
-  const citiesArray = Object.values(cities);
-  // console.log(selectedValue);
 
   return (
-    <div className="container p-3 bg-primary-subtle">
-      <div class="row">
-        {/* <i className='text-danger fw-bold'>Select component</i> */}
-        <form onSubmit={handleSubmit} className=" row g-3 pb-3">
-          <label className="col-sm col-form-label text-dark">Choose your country:</label>
+    <div className="w-100 p-3 m-1 rounded-4 bg-info bg-opacity-10 select-panel">
+      <div className="row">
+        <form onSubmit={handleSubmit} className="row g-3 align-items-center">
+          <label className="col-sm col-form-label text-light align-self-center">
+            Select location
+          </label>
           <select
             value={userInput}
             onChange={handleChange}
-            className="form-select col-md"
+            className="form-select form-select-lg col-md bg-light text-dark border-light border-opacity-25"
           >
+            {citiesArray.length === 0 && (
+              <option value="">Type a city to see matches</option>
+            )}
             {citiesArray.map((city, index) => (
               <option
                 key={city.country + index}
-                value={`${city.name} , ${city.country}`}
+                value={`${city.name},${city.country}`}
               >
                 {city.name}, {city.country}
               </option>
             ))}
           </select>
-          <div className="col-sm col-form-label">
-            <input
+          <div className="col-sm col-form-label d-flex align-items-center">
+            <button
               type="submit"
-              value="Submit"
-              className="btn btn-primary mb-3"
-            />
+              className="btn btn-outline-info btn-lg text-light fw-semibold"
+              disabled={!userInput}
+            >
+              Use
+            </button>
           </div>
         </form>
 
-        {selectedValue && <div className="text-dark"> You selected {selectedValue} </div>}
+        {selectedValue && (
+          <div className="text-light mt-3">
+            Selected: <span className="fw-semibold">{selectedValue.city}</span>
+          </div>
+        )}
         <Body data={selectedValue} />
       </div>
     </div>

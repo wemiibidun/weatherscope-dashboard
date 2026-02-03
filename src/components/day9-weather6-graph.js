@@ -11,6 +11,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  Filler,
 } from "chart.js";
 ChartJS.register(
   CategoryScale,
@@ -19,59 +20,72 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 );
 
 export default function Graph(props) {
   const getData = () => {
-    // See API documentation here: https://openweathermap.org/forecast5
     const data = props.data;
-   
+
     const humidity = [];
     const wind_speed = [];
     const temp_time = [];
     const temp_c = [];
     const temp_f = [];
 
-    // The required day index to display in the graph
     const startIndex = props.dayIndex * 8;
     const endIndex = (props.dayIndex + 1) * 8 - 1;
-  
+
     if (data && data.list) {
-    data.list.forEach((sample, index) => {
+      data.list.forEach((sample, index) => {
         if (index < startIndex || index > endIndex) return;
         const d = new Date(sample.dt * 1000);
         temp_c.push(sample.main.temp);
         temp_f.push((sample.main.temp * 9) / 5 + 32);
         humidity.push(sample.main.humidity);
         wind_speed.push(sample.wind.speed);
-        temp_time.push(d.toLocaleTimeString());
+        temp_time.push(
+          d.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+          })
+        );
       });
     }
-    //console.log('Graph mounted')
-    // console.log('temp_max_f:', temp_max_f);
-    // console.log('temp_max_c:', temp_max_c);
+
     return {
       labels: temp_time,
       datasets: [
         {
-            data: props.settings.tempCelsius ? temp_c : temp_f,
-            borderColor: "blue",
-            fill: false,
-            label: props.settings.tempCelsius ? "Temperature (C)" : "Temperature (F)",
+          data: props.settings.displayTemp
+            ? props.settings.tempCelsius
+              ? temp_c
+              : temp_f
+            : [],
+          borderColor: "#38bdf8",
+          backgroundColor: "rgba(56, 189, 248, 0.2)",
+          fill: true,
+          tension: 0.35,
+          label: props.settings.tempCelsius ? "Temp (C)" : "Temp (F)",
+          hidden: !props.settings.displayTemp,
         },
         {
           data: props.settings.displayHumidity ? humidity : [],
-          borderColor: "green",
-          fill: false,
+          borderColor: "#34d399",
+          backgroundColor: "rgba(52, 211, 153, 0.2)",
+          fill: true,
+          tension: 0.35,
           label: "Humidity (%)",
           hidden: !props.settings.displayHumidity,
         },
         {
           data: props.settings.displayWind ? wind_speed : [],
-          borderColor: "purple",
-          fill: false,
-          label: "Wind Speed (m/s)",
+          borderColor: "#a78bfa",
+          backgroundColor: "rgba(167, 139, 250, 0.2)",
+          fill: true,
+          tension: 0.35,
+          label: "Wind (m/s)",
           hidden: !props.settings.displayWind,
         },
       ],
@@ -79,24 +93,39 @@ export default function Graph(props) {
   };
 
   const options = {
-    legend: { display: true },
+    plugins: {
+      legend: {
+        position: "top",
+        align: "center",
+        labels: {
+          color: "#e2e8f0",
+          boxWidth: 10,
+          boxHeight: 10,
+          padding: 10,
+          font: { size: 11 },
+          usePointStyle: true,
+        },
+      },
+    },
     scales: {
+      x: {
+        ticks: { color: "#cbd5f5" },
+        grid: { color: "rgba(148, 163, 184, 0.15)" },
+      },
       y: {
         beginAtZero: true,
+        ticks: { color: "#cbd5f5" },
+        grid: { color: "rgba(148, 163, 184, 0.15)" },
       },
     },
     maintainAspectRatio: false,
   };
 
-
   return (
-    <div>
-      <h4 className="text-dark">Hourly Temperature Data</h4>
-
-      <div style={{height:"60vh",position:"relative", marginBottom:"1%", padding:"1%"}}>
-
-      {props.data && <Line data={getData()} 
-      options={options} />}
+    <div className="graph-card panel-card bg-dark bg-opacity-25 rounded-4 p-3 shadow-sm text-light h-100">
+      <h4 className="text-light">Hourly Conditions</h4>
+      <div style={{ height: "300px", position: "relative" }}>
+        {props.data && <Line data={getData()} options={options} />}
       </div>
     </div>
   );

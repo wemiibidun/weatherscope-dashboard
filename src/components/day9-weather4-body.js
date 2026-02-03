@@ -12,61 +12,72 @@ export default function Body(props) {
     displayHumidity: true,
   });
   const [weatherObj, setWeatherObj] = React.useState(null);
-  const selectedCity = props.data;
+  const [error, setError] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
+  const selectedCity = props.data?.city || "";
+  const refreshToken = props.data?.token || 0;
 
   React.useEffect(() => {
-    // console.log(selectedCity);
-    // API docs https://openweathermap.org/forecast5
+    if (!selectedCity) return;
     const Weather_API_key = "7beedcd716bb91a99f2dfbd7d36d07d9";
     const url = "https://api.openweathermap.org/data/2.5/forecast";
-    // Read about Fetch API here: https://javascript.info/fetch
- 
-    fetch(`${url}?q=${selectedCity}&appid=${Weather_API_key}&units=metric`)
-    
+
+    setError("");
+    setIsLoading(true);
+
+    fetch(
+      `${url}?q=${encodeURIComponent(selectedCity)}&appid=${Weather_API_key}&units=metric`
+    )
       .then((response) => response.json())
       .then((data) => {
+        if (data.cod && data.cod !== "200") {
+          setError(data.message || "Unable to load forecast.");
+          return;
+        }
         setWeatherObj(data);
-        console.log("API data came mounted");
-        console.log(data);
+      })
+      .catch(() => {
+        setError("Unable to load forecast.");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-  }, [selectedCity]);
+  }, [selectedCity, refreshToken]);
 
   const handleSettingsChange = (settingsUpdate) => {
     setSettings({ ...settings, ...settingsUpdate });
-    // console.log(settings);
   };
 
   return (
-    <div className="container p-3 bg-info shadow-lg ">
-      {/* <i className="text-danger fw-bold">Body component</i> */}
-      {/* {console.log("this is weather object")} */}
-      {/* {console.log(weatherObj.list)} */}
+    <div className="p-4 mt-4 rounded-4 main-panel">
+      {error && <div className="text-warning mb-3">{error}</div>}
+
       {weatherObj && weatherObj.city && (
-        <h4 className="text-dark shadow-sm p-3 mb-2 bg-body-tertiary rounded bg-info-subtle">
-        This is <span className="text-primary">{weatherObj.city.name}</span> - <span className="text-primary">{weatherObj.city.country}</span> Weather data information
-      </h4>
+        <h4 className="text-light shadow-sm p-3 mb-4 rounded bg-info bg-opacity-10 d-flex justify-content-between align-items-center">
+          <span>
+            Weather in <span className="text-info">{weatherObj.city.name}</span>,{" "}
+            <span className="text-info">{weatherObj.city.country}</span>
+          </span>
+          {isLoading && <span className="text-light-50">Updating...</span>}
+        </h4>
       )}
 
-      <div className="row">
-        <div className="col">
+      <div className="mb-4">
         <WeatherItem data={weatherObj} settings={settings} />
-        </div>
       </div>
 
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-6 col-md-6 col-sm-12 mb-3 mt-5">
-            <Settings
-              settings={settings}
-              settingsChangeHandler={handleSettingsChange}
-            />
-          </div>
+      <div className="row g-3 align-items-stretch">
+        <div className="col-lg-6 col-md-6 col-sm-12">
+          <Settings
+            settings={settings}
+            settingsChangeHandler={handleSettingsChange}
+          />
+        </div>
 
-          <div className="col-lg-6 col-md-6 col-sm-12 mb-3 mt-3">
-            {weatherObj && (
-              <Graph data={weatherObj} dayIndex={1} settings={settings} />
-            )}
-          </div>
+        <div className="col-lg-6 col-md-6 col-sm-12">
+          {weatherObj && (
+            <Graph data={weatherObj} dayIndex={1} settings={settings} />
+          )}
         </div>
       </div>
     </div>
